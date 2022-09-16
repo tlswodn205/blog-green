@@ -10,9 +10,9 @@
 	
 	<select id="findAll"
 		resultType="site.metacoding.red.web.dto.response.boards.MainDto">
-		SELECT *
+		SELECT b.id, b.title, if(u.username is null, "익명", u.username) AS username
 		FROM boards b
-		INNER JOIN
+		LEFT OUTER JOIN
 		users u
 		ON
 		b.usersId = u.id
@@ -21,7 +21,7 @@
 		</if>
 		ORDER BY b.id DESC
 		OFFSET #{startNum} ROWS
-		FETCH NEXT 3 ROWS ONLY
+		FETCH NEXT 10 ROWS ONLY
 	</select>
 	
 	
@@ -58,7 +58,7 @@
 		        ELSE 0 
 		    END AS isLast
 		FROM(
-			SELECT count(*) totalCount, ceil(count(*)/3) totalPage,#{page} currentPage, 0 isFirst, 0 isLast
+			SELECT count(*) totalCount, ceil(count(*)/10) totalPage,#{page} currentPage, 0 isFirst, 0 isLast
 			FROM boards
 			<if test="keyword != null">
 				WHERE title like CONCAT('%',#{keyword},'%')

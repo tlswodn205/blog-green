@@ -38,9 +38,9 @@
 	<div class="d-flex justify-content-center">
 		<ul class="pagination">
 			<li class='page-item ${pagingDto.first ? "disabled": ""}'><a class="page-link" href="/?page=${pagingDto.currentPage-1}&keyword=${pagingDto.keyword}">Prev</a></li>
-		<c:forEach var ="num" begin = "${pagingDto.startPageNum}" end="${pagingDto.lastPageNum}">
-			<li class='page-item'><a class='page-link' href="/?page=${num-1}&keyword=${pagingDto.keyword}">${num}</a></li>
-		</c:forEach>
+			<c:forEach var ="num" begin = "${pagingDto.startPageNum}" end="${pagingDto.lastPageNum}">
+				<li class='page-item'><a class='page-link' href="/?page=${num-1}&keyword=${pagingDto.keyword}">${num}</a></li>
+			</c:forEach>
 			<li class='page-item ${pagingDto.last ? "disabled": ""}'><a class="page-link" href="/?page=${pagingDto.currentPage+1}&keyword=${pagingDto.keyword}">Next</a></li>
 		</ul>
 	</div>

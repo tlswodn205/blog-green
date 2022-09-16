@@ -1,5 +1,8 @@
 package site.metacoding.red.web;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.HttpServerErrorException;
 
 import lombok.RequiredArgsConstructor;
 import site.metacoding.red.domain.users.Users;
@@ -41,7 +45,17 @@ public class UsersController {
 	
 	
 	@GetMapping("/loginForm")
-	public String loginForm() {
+	public String loginForm(Model model, HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+		for(Cookie cookie : cookies) {
+			if(cookie.getName().equals("username")) {
+				model.addAttribute(cookie.getName(), cookie.getValue());
+			}
+			System.out.println("===========");
+			System.out.println(cookie.getValue());
+			System.out.println(cookie.getName());
+			System.out.println("===========");
+		}
 		return "users/loginForm";
 	}
 	
@@ -52,8 +66,22 @@ public class UsersController {
 	}
 	
 	@PostMapping("/login")
-	public @ResponseBody CMRespDto<?> login(@RequestBody LoginDto loginDto) {
+	public @ResponseBody CMRespDto<?> login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
 		Users principal = usersService.로그인(loginDto);
+		System.out.println("===========");
+		System.out.println(loginDto.isRemember());
+		System.out.println("===========");
+		
+		if(loginDto.isRemember()) {
+			Cookie cookie = new Cookie("username", loginDto.getUsername());
+			cookie.setMaxAge(60*60*24);
+			response.addCookie(cookie);
+			//response.setHeader("Set-Cookie", "username="+loginDto.getUsername());
+		}else{
+			Cookie cookie = new Cookie("username", null);
+			cookie.setMaxAge(0);
+			response.addCookie(cookie);
+		}
 		
 		if(principal == null) {
 			return new CMRespDto<>(-1,"로그인 실패", null);

@@ -26,7 +26,7 @@ public class BoardsService {
 		if (page == null) {
 			page = 0;
 		}
-		int startNum = page * 3;
+		int startNum = page * 10;
 		List<MainDto> boardsList = boardsDao.findAll(startNum, keyword);
 		PagingDto pagingDto = boardsDao.paging(page, keyword);
 		if (boardsList.size() == 0)

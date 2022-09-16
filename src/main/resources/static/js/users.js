@@ -54,7 +54,7 @@ function join() {
 function checkUsername() {
 	let username = $("#username").val();
 
-	$.ajax("/users/usernameSameCheck?username=${username}", {
+	$.ajax("/users/usernameSameCheck?username=" + username, {
 		type: "GET",
 		dataType: "json",
 		async: true
@@ -73,10 +73,20 @@ function checkUsername() {
 	});
 }
 
+function myTest(){
+	let body = {
+		username: $("#username").val(),
+		password: $("#password").val(),
+		remember : $('#remember').prop("checked")
+		};
+	console.log(body);
+}
+
 function login() {
 	let data = {
 		username: $("#username").val(),
-		password: $("#password").val()
+		password: $("#password").val(),
+		remember : $('#remember').prop("checked")
 	};
 
 	alert(data.username);

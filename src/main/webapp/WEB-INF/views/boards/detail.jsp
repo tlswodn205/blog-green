@@ -8,7 +8,7 @@
 
 		<div class="d-flex">
 		
-			<a href="#" class="btn btn-warning">수정하러가기</a>
+			<a href="/boards/${boards.id}/updateForm" class="btn btn-warning">수정하러가기</a>
 
 			<form>
 				<button class="btn btn-danger">삭제</button>
