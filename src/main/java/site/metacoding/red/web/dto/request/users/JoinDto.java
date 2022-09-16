@@ -1,9 +1,13 @@
 package site.metacoding.red.web.dto.request.users;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import site.metacoding.red.domain.users.Users;
 
+@NoArgsConstructor
+@AllArgsConstructor	
 @Setter
 @Getter
 public class JoinDto {

@@ -18,11 +18,12 @@
 
 	<br />
 	<div>
-		<h3>제목입니다</h3>
+		<h3>${boards.title}</h3>
+		<h6>${boards.createdAt}</h6>
 	</div>
 	<hr />
 
-	<div>내용입니다</div>
+	<div>${boards.content}</div>
 
 
 </div>
