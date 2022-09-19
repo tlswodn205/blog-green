@@ -18,6 +18,7 @@ import org.springframework.web.client.HttpServerErrorException;
 
 import lombok.RequiredArgsConstructor;
 import site.metacoding.red.domain.users.Users;
+import site.metacoding.red.service.HeartsService;
 import site.metacoding.red.service.UsersService;
 import site.metacoding.red.util.Script;
 import site.metacoding.red.web.dto.request.users.JoinDto;
@@ -31,6 +32,7 @@ public class UsersController {
 	
 	private final UsersService usersService;
 	private final HttpSession session;
+	private final HeartsService heartsService;
 	
 	@GetMapping("users/usernameSameCheck")
 	public @ResponseBody CMRespDto<Boolean> UsernameSameCheck(String username) {
@@ -108,6 +110,7 @@ public class UsersController {
 	@DeleteMapping("/users/{id}")
 	public @ResponseBody CMRespDto<?> delete(@PathVariable Integer id) {
 		usersService.회원탈퇴(id);
+		heartsService.계정삭제에따른좋아요삭제(id);
 		session.invalidate();
 		return new CMRespDto<>(1,"회원탈퇴 성공",null);
 	}

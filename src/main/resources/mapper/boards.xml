@@ -38,7 +38,7 @@
 	</update>
 	
 	<delete id="deleteById">
-		DELETE boards
+		DELETE From boards
 		WHERE id = #{id}
 	</delete>
 

@@ -2,6 +2,8 @@
 
 <%@ include file="../layout/header.jsp"%>
 
+<h1 id="page"> page : ${sessionScope.referer.page}</h1>
+<h1 id="keyword">keyword: ${sessionScope.referer.keyword}</h1>
 <div class="container">
 	<br />
 	<div class="d-flex justify-content-end">

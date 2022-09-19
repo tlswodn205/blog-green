@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.metacoding.red.domain.hearts.HeartsDao">
+
+	<insert id="insert">
+		INSERT hearts(usersId, boardsId)VALUE(#{usersId},#{boardsId})
+	</insert>
+	
+	<select id ="findByBoardsId" resultType="site.metacoding.red.web.dto.request.hearts.HeartsRespDto">
+		SELECT totalHeart, if(heartCheck, 1, 0) AS myHeart, if(heartCheck, heartCheck, null) AS id
+		FROM(
+			SELECT count(*) totalHeart, (SELECT id FROM Hearts WHERE usersId= #{usersId} AND boardsId = #{boardsId}) heartCheck 
+			FROM Hearts
+			WHERE boardsId= #{boardsId}
+		) basic
+	</select>
+	
+	<delete id="deleteById">
+		DELETE FROM hearts 
+		WHERE id = #{id}
+	</delete>
+
+	<delete id="deleteByUsersId">
+		DELETE FROM hearts 
+		WHERE usersId = #{usersId}
+	</delete>
+	
+	<delete id="deleteByBoardsId">
+		DELETE FROM hearts 
+		WHERE boardsId = #{boardsId}
+	</delete>
+	
+</mapper>
